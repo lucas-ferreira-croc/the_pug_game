@@ -1,0 +1,50 @@
+body{
+    background-image: url(../img/clinica.png);
+    height: 100%; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.doutora{
+    position: relative; 
+    width: 29%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    display: block;
+    z-index: -1;
+}
+
+.text-box{
+    position: relative; 
+    width: 1260px;
+    height: 200px;
+    background-color: black;
+    opacity: 0.6;
+    margin-top: 20px;
+    color: white;
+    font-size: 25px;
+    z-index: 1;
+}
+
+.pessoa{
+    color: #ff8882;
+    font-size: 25px;
+    opacity: 1;    
+}
+
+.pessoa-dois{
+    color: #2afff4;
+    font-size: 25px;
+    opacity: 1;        
+}
+
+.text-box .escolha-um:hover{
+    border: 2px solid #FFFFFF;
+    border-radius: 5px;
+}
+
+.text-box .escolha-dois:hover{
+    border: 2px solid #FFFFFF;
+    border-radius: 5px;
+}

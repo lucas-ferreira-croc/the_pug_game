@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the pug game</title>
+    <link rel="stylesheet" href="../css/predispo.css">
+    <link rel="stylesheet" href="../css/clinica.css">
+    <script src="../js/setDoenca.js"></script>
+</head>
+<body>
+    <img id="imgVet" src="../img/vet-sorriso.png" alt="" class="doutora" class="center">
+
+    <div class="text-box" onclick="passarFala()">
+        <span class="pessoa" id="pessoa">Doutora:</span> <span id="fala" style="opacity: 1;" style="position: relative;"></span>
+        
+        <span class="escolha-um" id="escolha-um"></span><br><br>
+        <span class="pessoa-dois" id="pessoa-dois"></span><span class="escolha-dois" id="escolha-dois"></span>
+    </div>
+
+
+</body>
+</html>
+
+<script>
+
+    var contador = 0;
+
+    var falasDoutora = ["Olá! Seja bem vinda ao hospital Anclivepa", 
+        "Preciso que você fale um pouco sobre o seu pet para podermos começar a consulta de uma maneira mais eficiente, por favor, preencha essa ficha:",
+        "Bruce, que nome lindo, tem 5 anos e é um menino",
+        "Agora que você já me contou um pouco sobre ele, vamos começar",
+        "Diga-me,por qual motivo você o trouxe?"];
+
+    if(contador == 0){
+        fala.innerHTML = falasDoutora[0];
+    }    
+
+    function passarFala(){
+
+        fala.innerHTML= falasDoutora[++contador];
+        
+        if(contador > 0){
+            document.getElementById("imgVet").src = "../img/vet-falando.png";
+        }
+
+        if(contador > 3){
+            document.getElementById("imgVet").src = "../img/vet-simples.png";
+        }
+
+        if(contador > 4){
+            
+            document.getElementById("fala").innerHTML = "";
+
+            document.getElementById("pessoa").innerHTML = "Sarah:";
+            document.getElementById("pessoa-dois").innerHTML = "Sarah:";
+            
+            document.getElementById("pessoa").style.color = "#2afff4";
+
+            document.getElementById("escolha-um").innerHTML = "Meu cachorrrinho anda tossindo, roncando, não consegue fazer exercícios e faz barulho ao respirar";
+            document.getElementById("escolha-dois").innerHTML = " Meu cachorrinho está com manchas vermelhas  e bolinhas na pele, principalmente nas articulações";
+        }
+    }
+</script>
