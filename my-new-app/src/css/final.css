@@ -1,0 +1,24 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #c3dff7;
+}
+
+
+.thanks{
+    margin-top: 76px;
+    margin-left: 750px;
+    margin-bottom: -4px;
+  }
+  
+  .final-button{
+    margin-top: 140px;
+    z-index: 5;
+    margin-left: 240px;
+    position: fixed;
+  }
+  
+  .lettering{
+    margin-left: 124px;
+    margin-top: 62px
+  }

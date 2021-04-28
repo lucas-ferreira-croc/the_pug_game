@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,61 +8,249 @@
     <title>Dia de consulta</title>
     <link rel="stylesheet" href="../css/predispo.css">
     <link rel="stylesheet" href="../css/clinica.css">
+    <link rel="stylesheet" href="../css/form.css">
     <script src="../js/setDoenca.js"></script>
 </head>
-<body>
-    <img id="imgVet" src="../img/vet-sorriso.png" alt="" class="doutora" class="center">
 
-    <div class="text-box" onclick="passarFala()">
-        <span class="pessoa" id="pessoa">Doutora:</span> <span id="fala" style="opacity: 1;" style="position: relative;"></span>
-        
-        <span class="escolha-um" id="escolha-um"></span><br><br>
-        <span class="pessoa-dois" id="pessoa-dois"></span><span class="escolha-dois" id="escolha-dois"></span>
-    
+<body>
+
+    <div style="display: flex;">
+        <img id="imgVet" src="../img/vet-sorriso.png" alt="" class="doutora" class="center">
+
+        <div>
+            <img id="pug" src="" alt="" class="imagemAuxiliar">
+        </div>
+
     </div>
 
-    <img src="../img/botaozinho.png" alt="" class="botaozinho-clique-clinica">    
+    <div class="text-box" onclick="passarFala()">
+        <div style="margin: 10px;">
+            <span class="pessoa" id="pessoa">Doutora:</span> <span id="fala" style="opacity: 1;"
+                style="position: relative;"></span>
 
+            <span onclick="escolhaDoenca(false)" class="escolha-um" id="escolha-um"></span><br><br>
+            <span class="pessoa-dois" id="pessoa-dois"></span><span onclick="escolhaDoenca(true)" class="escolha-dois"
+                id="escolha-dois"></span>
+
+            <div class="form-pug" id="form">
+                <input type="text" placeholder="Seu nome" class="form-input" id="nomePessoa"> 
+                <input type="text" placeholder="Nome do animal" class="form-input" id="nomeAnimal"> <br>
+                <input type="text" placeholder="Idade do animal(numero)" class="form-input" id="idadeAnimal"> 
+                
+                <select name="" id="sexo" class="form-select">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+                <br>
+            
+                <button class="form-button" onclick="preencher()">Finalizar ficha</button>
+            </div>
+        </div>
+    </div>
+    <img src="../img/botaozinho.png" alt="" class="botaozinho-clique-clinica" id="botaozinho-clique">
+
+    <audio id="audio" loop="loop">
+        <source src="../img/Memotchiptune.mp3" type="audio/mpeg">
+    </audio>
 </body>
 </html>
 
 <script>
+ var contador = 0;
 
-    var contador = 0;
+    var falasDoutora = ["Olá! Seja bem vindo(a) ao hospital Anclivepa!",
+        "Preciso que você fale um pouco sobre o seu pet para podermos começar a consulta, por favor, preencha essa ficha:",
+        "",
+        "", //el
+        "", //artigo
+        "", //nome e el
+        "", //nome //amg
+        "A dermatite é uma inflamação da pele que pode ser causada por fungos, bactérias, ácaros ,seborreia e alérgenos que estão presente no ambiente como bolores, polens, sementes de gramínea, penas, poeira e principalmente umidade.",
+        "Os pugs são sujeitos a esse problema de saúde, principalmente pela presença de rugas, onde sujeiras e umidade se acumulam com facilidade.",
+        "",
+        "", //el el
+        "Todas estas manifestações podem levar a infeccções e lesões secundárias.",
+        "Para efetuar um diagnóstico, eu preciso retirar um predaço da pele através de raspagem, assim vou conseguir analisar se há ou não a presença de bactérias, ácros ou fungos, podemos também realizar o teste hormonal, que é uma biopsia na pele e de cultura microbiológica.",
+        "As opções atuais para o tratamento da DAC (Dermatite atópica canina) são imunoterapia alérgeno-específica, utilização de antialérgenicos, anti-inflamatórios, antibióticos, terapia antimicrobiana e prevenção de contato com alérgenos.",
+        "É importante seguir o tratamento conforme explicado e nunca parar de dar o medicamento sem a aprovação de um veterinário!",
+        "A limpeza do ambiente também é muito importante para o tratamento.",
+        "Vale lembrar que depois do tratamento, é muito importante prevenir a dermatite, com escovação e limpeza do animal, que são as melhores maneiras de prevenir  o surgimento desse tipo de problema.",
+        "Assim que o animal sair do banho, é preciso secar muito bem sua pelagem, pois os pugs apresentam dobrinhas e elas precisam de um cuidado especial porque podem acumular sujeiras deixando a pele propensa para proliferação de fungos e bactérias, usar antipulgas e produtos específicos para a pele do animal e manter a caminha e os acessórios do animal limpos.", 
+        "", //nome
+        "até a próxima!",
+        "até a próxima!"
+    ];
 
-    var falasDoutora = ["Olá! Seja bem vinda ao hospital Anclivepa", 
-        "Preciso que você fale um pouco sobre o seu pet para podermos começar a consulta de uma maneira mais eficiente, por favor, preencha essa ficha:",
-        "Bruce, que nome lindo, tem 5 anos e é um menino",
-        "Agora que você já me contou um pouco sobre ele, vamos começar",
-        "Diga-me,por qual motivo você o trouxe?"];
+    var nomePet;
+    var nomeDono;
+    var sex;
+    var idade;
+    var amig;
+    var artigo;
+    var artigao;
+    var d;
+    var el;
+    var pr;
 
-    if(contador == 0){
+    var podePassar = true;
+
+    if (contador == 0) {
         fala.innerHTML = falasDoutora[0];
-    }    
+    }
 
-    function passarFala(){
+    function passarFala() {
 
-        fala.innerHTML= falasDoutora[++contador];
+        if((contador == 1) && (nomeDono == null ||nomePet == null || sex == null || idade == null)){
+            return;
+        }
+
+        if((contador == 1) && ((nomeDono == "") || (nomePet == "") || (idade == ""))){
+            return;
+        }
         
-        if(contador > 0){
-            document.getElementById("imgVet").src = "../img/vet-falando.png";
+        if(!podePassar){
+            return;
         }
 
-        if(contador > 3){
-            document.getElementById("imgVet").src = "../img/vet-simples.png";
-        }
+        fala.innerHTML = falasDoutora[++contador];
 
-        if(contador > 4){
-            
-            document.getElementById("fala").innerHTML = "";
+        switch (contador) {
+            case 1:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                document.getElementById("form").style.display = "block";
+                break;
 
-            document.getElementById("pessoa").innerHTML = "Sarah:";
-            document.getElementById("pessoa-dois").innerHTML = "Sarah:";
-            
-            document.getElementById("pessoa").style.color = "#2afff4";
+            case 2:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                document.getElementById("pug").style.display = "block";
+                document.getElementById("pug").src = "../img/dermatoPug.png";
+                document.getElementById("form").style.display = "none";
+                falasDoutora[3] = `Agora que você já me contou um pouco sobre ${el}, vamos começar.`; 
+                falasDoutora[4] = `Diga-me,por qual motivo você ${artigo} trouxe?`;
+                falasDoutora[5] = `É verdade, ${artigo} ${nomePet} realmente está com algumas manchas, isso pode ser sinal de que ${el} está com Dermatite.`;
+                falasDoutora[6] = `${artigao} ${nomePet} realmente pode ter essas dificuldades, é normal em pugs, mas, estou vendo algumas manchinhas na pele ${d} ${amig} que podem ser um indício de Dermatite.`;
+                falasDoutora[9] = `Vou analisar ${artigo} ${nomePet} para conseguir mais detalhes.`
+                falasDoutora[10] = `Percebi que ${el} está lambendo muito as patas e algumas escoriações, além de se coçar, ${el} apresenta algumas lesões nas axilas e em algumas outras regiões é possível ver descamação, queda de pelos, vermelhidão e mau cheiro.`;
+                falasDoutora[18] = `Bem, acho que essa foi a consulta, vou receitar alguns remedinhos ${pr} ${nomePet} e podemos marcar um retorno!`;
+                break;
 
-            document.getElementById("escolha-um").innerHTML = "Meu cachorrrinho anda tossindo, roncando, não consegue fazer exercícios e faz barulho ao respirar";
-            document.getElementById("escolha-dois").innerHTML = " Meu cachorrinho está com manchas vermelhas  e bolinhas na pele, principalmente nas articulações";
+            case 3:
+                document.getElementById("imgVet").src = "../img/vet-sorriso.png";
+                document.getElementById("botaozinho-clique").style.display = "none";
+                break;
+
+            case 4:
+                podePassar = false;
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                document.getElementById("fala").innerHTML = "";
+
+                document.getElementById("pessoa").innerHTML = `${nomeDono}:`;
+                document.getElementById("pessoa-dois").innerHTML = `${nomeDono}:`;
+
+                document.getElementById("pessoa").style.color = "#2afff4";
+
+                document.getElementById("escolha-um").innerHTML = `${artigao} ${nomePet} anda tossindo, roncando, não consegue fazer exercícios e faz barulho ao respirar`;
+                document.getElementById("escolha-dois").innerHTML = `${artigao} ${nomePet} está com manchas vermelhas  e bolinhas na pele, principalmente nas articulações`;
+
+                break;
+
+            case 5:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                contador = 6;
+                break;
+
+            case 7:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;
+
+            case 9:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 10:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;
+
+            case 11:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 12:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;
+
+            case 14:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 15:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;
+
+            case 17:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 18:
+                document.getElementById("imgVet").src = "../img/vet-sorriso.png";
+                break;
+
+            case 20:
+                window.location.href = "final.html";
         }
     }
+
+    function escolhaDoenca(isDermatite) {
+
+        podePassar = true;
+
+        document.getElementById("pessoa").innerHTML = "Doutora:";
+        document.getElementById("pessoa").style.color = "#ff8882";
+
+        document.getElementById("pessoa-dois").innerHTML = "";
+
+        document.getElementById("escolha-um").innerHTML = "";
+        document.getElementById("escolha-dois").innerHTML = "";
+
+        if (!isDermatite) {
+
+            falasDoutora.push();
+            ++contador;
+        }
+
+        document.getElementById("pessoa").innerHTML = "Doutora:";
+    }
+
+    function preencher(){
+        
+        nomePet = document.getElementById("nomeAnimal").value;
+        nomeDono = document.getElementById("nomePessoa").value;
+        idade = document.getElementById("idadeAnimal").value;
+
+
+        if(document.getElementById("sexo").value == "M"){
+            sex = "um menino";
+            amig = "seu amiguinho"
+            artigo = "o";
+            artigao = "O";
+            d = "da";
+            el = "ele";
+            pr = "pro";
+        }else{
+            sex = "uma menina";
+            amig = "sua amiguinha"
+            artigo = "a";
+            artigao = "A";
+            d = "do";
+            el = "ela";
+            pr = "pra";
+        }
+
+        falasDoutora[2] = `${nomePet}, que lindo nome, tem ${idade} anos e é ${sex}. É um prazer conhecer vocês ${nomeDono} e ${artigo} ${nomePet}`;
+
+    }
+    var audio = document.getElementById("audio");
+
+    window.onload = audio.play();
+
 </script>

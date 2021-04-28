@@ -7,9 +7,261 @@
     <title>Dia de consulta</title>
     <link rel="stylesheet" href="../css/predispo.css">
     <link rel="stylesheet" href="../css/clinica.css">
+    <link rel="stylesheet" href="../css/form.css">
     <script src="../js/setDoenca.js"></script>
 </head>
 <body>
-    
+
+    <div style="display: flex;">
+        <img id="imgVet" src="../img/vet-sorriso.png" alt="" class="doutora" class="center">
+        
+        <div>
+            <img id="pug" src="" alt="" class="imagemAuxiliar">
+        </div>
+
+        <div>
+            <img id="cranio" src="" alt="" class="cranio" style="display: none;">
+        </div>
+
+    </div>
+
+    <div class="text-box" onclick="passarFala()">
+        <div style="margin: 10px;">
+            <span class="pessoa" id="pessoa">Doutora:</span> <span id="fala" style="opacity: 1;" style="position: relative;"></span>
+        
+            <span onclick="escolhaDoenca(false)" class="escolha-um" id="escolha-um"></span><br><br>
+            <span  class="pessoa-dois" id="pessoa-dois"></span><span onclick="escolhaDoenca(true)" class="escolha-dois" id="escolha-dois"></span>
+        </div>
+
+        <div class="form-pug" id="form">
+            <input type="text" placeholder="Seu nome" class="form-input" id="nomePessoa"> 
+            <input type="text" placeholder="Nome do animal" class="form-input" id="nomeAnimal"> <br>
+            <input type="text" placeholder="Idade do animal(numero)" class="form-input" id="idadeAnimal"> 
+            
+            <select name="" id="sexo" class="form-select">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+            <br>
+        
+            <button class="form-button" onclick="preencher()">Finalizar ficha</button>
+        </div>
+
+    </div>
+
+    <img src="../img/botaozinho.png" alt="" class="botaozinho-clique-clinica" id="botaozinho-clique">    
 </body>
 </html>
+
+<script>
+
+    var contador = 0;
+
+    var falasDoutora = ["Olá! Seja bem vindo(a) ao hospital Anclivepa!", 
+        "Preciso que você fale um pouco sobre o seu pet para podermos começar a consulta, por favor, preencha essa ficha:",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "A braquicefalia é uma má formação congênita no crânio, ou seja, o animal apresenta um aumento ou uma diminuição no tamanho, fazendo com que o mesmo seja mais achatado.",
+        "Ela é caracterizada pela combinação de anormalidades primárias e secundárias do trato respiratório superior, tendo um focinho mais curto e podendo resultar em obstrução significativa das vias aéreas superiores.",
+        "Suas principais características são, a predisposição à afeccções nas vias aéreas superiores, esôfago, estômago, duodeno, bem como malformações dentárias e oftálmicas.Em cães braquicefálicos, as placas cartilaginosas craniais são curtas espessas e deslocadas medialmente.",
+        "A braquicefalia prejudica gravemente algumas das principais funções desses órgãos, que são a respiração e a termorregulação, impedindo o o animal de ter a correta oxigenação do sangue e equilíbrio térmico, quabrando a homeostasia e podendo levar a colapso e morte em cassos mais graves.",
+        "As manifestações clínicas da braquicefalia são a dispneia inspiratória(falta de ar), culminando em angústia respiratória, ronco, tosse, intolerância ao exercício, cianose, edema de tecidos moles, obstrução de vias aéreas superiores, fluxo turbulento de ar, aparecimento de ruído inspiratório e síncope, além de posssuir muitas dificuldades na hora do parto, podendo culminar em morte.",
+        "O diagnóstico pode ser feito por laringoscopia, que é um exame que abrange a laringe, faringe e o nariz, exames endoscópicos, hemograma completo e o uso de Plestimógrafo, que é um exame que avalia a função pulmonar, além de auscultação.",
+        "",
+        "Os procedimentos mais utilizados são a ressecção das narinas estenóticas, do palato mole e vestíbuloplastia.",
+        "Os tutores precisam ter uma maior atenção durante o calor, porque são animais que não fazem a troca de calor como os outros cachorros, sendo assim, eles tem uma tendência a ter hipertemia, que pode causar ataques cardiorrespiratórios.",
+        "",
+        "",
+        "",
+        "até a próxima!",
+        "até a próxima!"
+    ];
+
+    var nomePet;
+    var nomeDono;
+    var sex;
+    var idade;
+    var amig;
+    var artigo;
+    var artigao;
+    var d;
+    var el;
+    var pr;
+
+    var podePassar = true;
+
+    if(contador == 0){
+        fala.innerHTML = falasDoutora[0];
+    }    
+
+    function passarFala(){
+
+        if((contador == 1) && (nomeDono == null ||nomePet == null || sex == null || idade == null)){
+            return;
+        }
+
+        if((contador == 1) && ((nomeDono == "") || (nomePet == "") || (idade == ""))){
+            return;
+        }
+
+        if(!podePassar){
+            return;
+        }
+        
+        console.log("passou" + contador);
+
+        fala.innerHTML= falasDoutora[++contador];
+        
+        switch(contador){
+            case 1:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                document.getElementById("form").style.display = "block";
+                
+                break;
+            
+            case 2:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                document.getElementById("pug").style.display = "block";
+                document.getElementById("pug").src = "../img/braquiPug.png";
+                document.getElementById("form").style.display = "none";
+                falasDoutora[3] = `Agora que você já me contou um pouco sobre ${el}, vamos começar.`; 
+                falasDoutora[4] = `Diga-me,por qual motivo você ${artigo} trouxe?`;
+                falasDoutora[5] = `Olha, em uma primeira olhada, ${artigo} ${nomePet} não parece ter esses sintomas, mas vou levar isso em consideração quando for analisar ele mais atentamente`;
+                falasDoutora[6] = `Parece que ${amig} está com mais dificuldades que o comum para respirar e realizar outras tarefas, provavelmente está relacionado à braquicefalia`;
+                falasDoutora[13] = `Nós devemos tratar os sintomas e evitar a progressão da doença, gerando um maior conforto ${pr} ${nomePet}, mas, a correção cirúrgica ainda é o método mais eficaz de tratamento, pois só por ela é feita a desobstrução da passagem do ar.`;
+                falasDoutora[16] = `${artigao} ${nomePet} também deve ser mantido longe de situações e lugares que possam causar estresse ou exercício físico exarcebado, portanto, lugares frescos e tranquilos.`;
+                falasDoutora[17] = `Também deve-se evitar a presença de alérgenos como fumaça de cigarro e perfumes, que podem também causar dificuldade respiratória. Deve se dar muita atenção a alimentação pois não podemos deixar que ${el} fiquem obeso.`;
+                falasDoutora[18] = `Bem, acho que essa foi a consulta, vamos marcar alguns exames ${pr} ${nomePet} e podemos marcar um retorno!`;
+                break;
+            
+            case 3:
+                
+                document.getElementById("imgVet").src = "../img/vet-sorriso.png";
+                document.getElementById("botaozinho-clique").style.display = "none";
+                document.getElementById("pug").style.display = "block";
+                document.getElementById("pug").src = "../img/braquiPug.png";
+                break;
+
+            case 4:
+                podePassar = false;
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                document.getElementById("fala").innerHTML = "";
+
+                document.getElementById("pessoa").innerHTML = `${nomeDono}:`;
+                document.getElementById("pessoa-dois").innerHTML = `${nomeDono}:`;
+
+                document.getElementById("pessoa").style.color = "#2afff4";
+
+                document.getElementById("escolha-um").innerHTML = `${artigao} ${nomePet} anda tossindo, roncando, não consegue fazer exercícios e faz barulho ao respirar`;
+                document.getElementById("escolha-dois").innerHTML = `${artigao} ${nomePet} está com manchas vermelhas  e bolinhas na pele, principalmente nas articulações`;
+
+                podePassar = false;
+                break;
+            
+            case 5:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                contador = 6;
+                break;
+       
+            case 7:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                document.getElementById("pug").style.display = "none";
+                document.getElementById("cranio").style.display = "block";
+                document.getElementById("cranio").src = "../img/cranio.png"
+                break;
+            
+            case 9:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                document.getElementById("cranio").style.display = "none";
+                document.getElementById("pug").style.display = "block";
+                break;
+            
+            case 10:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;
+
+            case 11:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 12:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;               
+
+            case 14:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 15:
+                document.getElementById("imgVet").src = "../img/vet-falando.png";
+                break;
+                      
+            case 17:
+                document.getElementById("imgVet").src = "../img/vet-simples.png";
+                break;
+
+            case 18:
+                document.getElementById("imgVet").src = "../img/vet-sorriso.png";
+                break;
+            
+            case 20:
+                window.location.href = "final.html";
+        }
+    }
+    
+    function escolhaDoenca(isDermatite){
+        
+        podePassar = true;
+
+        document.getElementById("pessoa").innerHTML = "Doutora:";
+        document.getElementById("pessoa").style.color = "#ff8882";
+
+        document.getElementById("pessoa-dois").innerHTML = "";
+
+        document.getElementById("escolha-um").innerHTML = "";
+        document.getElementById("escolha-dois").innerHTML = "";
+
+        if(!isDermatite){
+
+            falasDoutora.push();
+            ++contador;
+        }
+
+        document.getElementById("pessoa").innerHTML = "Doutora:";
+    }
+
+    function preencher(){
+        
+        nomePet = document.getElementById("nomeAnimal").value;
+        nomeDono = document.getElementById("nomePessoa").value;
+        idade = document.getElementById("idadeAnimal").value;
+
+
+        if(document.getElementById("sexo").value == "M"){
+            sex = "um menino";
+            amig = "seu amiguinho"
+            artigo = "o";
+            artigao = "O";
+            d = "da";
+            el = "ele";
+            pr = "pro";
+        }else{
+            sex = "uma menina";
+            amig = "sua amiguinha"
+            artigo = "a";
+            artigao = "A";
+            d = "do";
+            el = "ela";
+            pr = "pra";
+        }
+
+        falasDoutora[2] = `${nomePet}, que lindo nome, tem ${idade} anos e é ${sex}. É um prazer conhecer vocês ${nomeDono} e ${artigo} ${nomePet}`;
+
+    }
+
+    var audio = document.getElementById("audio");
+    window.onload = audio.play();
+</script>

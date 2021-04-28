@@ -12,5 +12,13 @@ function chosenBraqui(){
 }
 
 function chosenDerma(){
-    window.location.href = "Derma.html"
+    window.location.href = "Derma.html";
+}
+
+function inicio(){
+  window.location.href = "../escolhaDoenca.html";
+}
+
+function closeGame(){
+  window.close();
 }

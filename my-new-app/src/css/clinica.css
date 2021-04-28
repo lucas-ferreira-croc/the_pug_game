@@ -4,24 +4,40 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+.imagemAuxiliar{
+    position: relative;
+    width: 50%;
+    z-index: 0;
+    right: 53px;
+    bottom: -221px
+}
 
+.doutora{
+    position: relative;
+    width: 29%;
+    top: 176px;
+    left: 50;
+    margin-right: auto;
+    margin-left: auto;
+    /* margin-top: 30px; */
+    }
 .doutora{
     position: relative; 
     width: 29%;
     margin-right: auto;
     margin-left: auto;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     display: block;
     z-index: -1;
 }
 
 .text-box{
-    position: relative; 
+    position: relative;
     width: 1260px;
-    height: 200px;
+    height: 210px;
     background-color: black;
     opacity: 0.6;
-    margin-top: 20px;
+    margin-top: -60px;
     color: white;
     font-size: 25px;
     z-index: 1;
@@ -57,3 +73,7 @@ body{
     z-index: 2;
   }
   
+  .form-pug{
+    margin: 10px;
+    display: none;
+  }
